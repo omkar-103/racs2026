@@ -1,21 +1,13 @@
 'use client';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { ChevronDown, Menu, X, LogOut, User, Shield } from 'lucide-react';
+import { ChevronDown, Menu, X, LogOut, Shield } from 'lucide-react';
 
 export default function Navbar() {
   const [showCommitteeDropdown, setShowCommitteeDropdown] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
-  const [showAuthModal, setShowAuthModal] = useState(false);
-  const [isLoginMode, setIsLoginMode] = useState(true);
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: ''
-  });
 
   const adminEmails = [
     'ac.chaskar@ictmumbai.edu.in',
@@ -33,56 +25,6 @@ export default function Navbar() {
       setIsLoggedIn(true);
     }
   }, []);
-
-  const handleAuth = async () => {
-    if (isLoginMode) {
-      // Login
-      try {
-        const res = await fetch('/api/auth/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: formData.email, password: formData.password })
-        });
-        const data = await res.json();
-        if (data.success) {
-          setCurrentUser(data.user);
-          setIsLoggedIn(true);
-          localStorage.setItem('conferenceUser', JSON.stringify(data.user));
-          setShowAuthModal(false);
-          setFormData({ firstName: '', lastName: '', email: '', password: '' });
-        } else {
-          alert(data.message || 'Login failed');
-        }
-      } catch (error) {
-        alert('Error logging in');
-      }
-    } else {
-      // Register
-      if (!formData.firstName || !formData.lastName || !formData.email || !formData.password) {
-        alert('Please fill all fields');
-        return;
-      }
-      try {
-        const res = await fetch('/api/auth/register', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(formData)
-        });
-        const data = await res.json();
-        if (data.success) {
-          setCurrentUser(data.user);
-          setIsLoggedIn(true);
-          localStorage.setItem('conferenceUser', JSON.stringify(data.user));
-          setShowAuthModal(false);
-          setFormData({ firstName: '', lastName: '', email: '', password: '' });
-        } else {
-          alert(data.message || 'Registration failed');
-        }
-      } catch (error) {
-        alert('Error registering');
-      }
-    }
-  };
 
   const handleLogout = () => {
     setIsLoggedIn(false);
@@ -120,7 +62,7 @@ export default function Navbar() {
                 About Us
               </Link>
               <Link href="/scope" className="px-4 py-2 hover:bg-blue-800 rounded transition-all duration-200 font-medium">
-                Scope
+                Scope of the Conference
               </Link>
               
               {/* Committee Dropdown */}
@@ -178,12 +120,20 @@ export default function Navbar() {
                   </button>
                 </>
               ) : (
-                <button
-                  onClick={() => { setShowAuthModal(true); setIsLoginMode(true); }}
-                  className="px-4 md:px-6 py-2 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 rounded-lg transition-all duration-200 font-medium shadow-md text-sm md:text-base"
-                >
-                  Register / Login
-                </button>
+                <div className="flex items-center space-x-2">
+                  <Link
+                    href="/register"
+                    className="px-4 md:px-6 py-2 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 rounded-lg transition-all duration-200 font-medium shadow-md text-sm md:text-base"
+                  >
+                    Register
+                  </Link>
+                  <Link
+                    href="/login"
+                    className="px-4 md:px-6 py-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 rounded-lg transition-all duration-200 font-medium shadow-md text-sm md:text-base"
+                  >
+                    Login
+                  </Link>
+                </div>
               )}
             </div>
           </div>
@@ -202,85 +152,6 @@ export default function Navbar() {
           )}
         </div>
       </nav>
-
-      {/* Auth Modal */}
-      {showAuthModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl p-6 md:p-8 max-w-md w-full shadow-2xl">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-bold text-blue-900">
-                {isLoginMode ? 'Login' : 'Register'}
-              </h2>
-              <button onClick={() => setShowAuthModal(false)} className="text-gray-500 hover:text-gray-700">
-                <X className="w-6 h-6" />
-              </button>
-            </div>
-            
-            <div className="space-y-4">
-              {!isLoginMode && (
-                <>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">First Name</label>
-                    <input
-                      type="text"
-                      name="firstName"
-                      value={formData.firstName}
-                      onChange={(e) => setFormData({...formData, firstName: e.target.value})}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
-                    <input
-                      type="text"
-                      name="lastName"
-                      value={formData.lastName}
-                      onChange={(e) => setFormData({...formData, lastName: e.target.value})}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    />
-                  </div>
-                </>
-              )}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={(e) => setFormData({...formData, email: e.target.value})}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
-                <input
-                  type="password"
-                  name="password"
-                  value={formData.password}
-                  onChange={(e) => setFormData({...formData, password: e.target.value})}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-              </div>
-              
-              <button
-                onClick={handleAuth}
-                className="w-full bg-gradient-to-r from-blue-900 to-blue-800 text-white py-3 rounded-lg hover:from-blue-800 hover:to-blue-700 transition-all duration-200 font-semibold shadow-md"
-              >
-                {isLoginMode ? 'Login' : 'Register'}
-              </button>
-            </div>
-            
-            <div className="mt-4 text-center">
-              <button
-                onClick={() => setIsLoginMode(!isLoginMode)}
-                className="text-blue-600 hover:underline text-sm"
-              >
-                {isLoginMode ? "Don't have an account? Register" : 'Already have an account? Login'}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </>
   );
 }

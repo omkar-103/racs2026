@@ -35,31 +35,50 @@ export default function Home() {
               </div>
             </div>
             
-            {/* Organized By */}
-            <div className="text-center mb-6">
-              <p className="text-lg md:text-xl font-semibold italic mb-2">Organized by</p>
-              <p className="text-sm md:text-lg font-medium">Department of Chemistry, ICT Mumbai and Indian Chemical Society- Mumbai Branch</p>
-            </div>
+     {/* Organized By */}
+<div className="text-center mb-6">
+  <p className="text-lg md:text-xl font-semibold italic mb-2 text-black">
+    Organized by
+  </p>
+  <p className="text-sm md:text-lg font-medium text-black">
+    Department of Chemistry, ICT Mumbai and Indian Chemical Society – Mumbai Branch
+  </p>
+</div>
+
+
+
 
             {/* Patrons */}
-            <div className="bg-gradient-to-r from-teal-500 to-teal-600 text-white rounded-lg p-4 mb-6 shadow-md">
-              <h3 className="text-xl md:text-2xl font-bold text-center">Patrons</h3>
-            </div>
+  
+<div className="bg-gradient-to-r from-teal-500 to-teal-600 text-white rounded-lg p-4 mb-6 shadow-md">
+  <h3 className="text-xl md:text-2xl font-bold text-center">Patrons</h3>
+</div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 mb-8">
-              {[
-                'Padma Vibhushan Prof M.M. Sharma',
-                'Padma Vibhushan Dr. Anil Kakodkar',
-                'Padma Bhushan Prof. J. B. Joshi',
-                'Padma Shri Prof. G.D. Yadav',
-                'Padma Shri Prof. J. P. Mittal',
-                'Prof. A. B. Pandit, VC, ICT'
-              ].map((patron, idx) => (
-                <div key={idx} className="p-3 md:p-4 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg shadow hover:shadow-md transition-shadow">
-                  <p className="font-semibold text-sm md:text-base text-center">{patron}</p>
-                </div>
-              ))}
-            </div>
+<div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 mb-8">
+  {[
+    'Padma Vibhushan Prof M.M. Sharma',
+    'Padma Vibhushan Dr. Anil Kakodkar',
+    'Padma Bhushan Prof. J. B. Joshi',
+    'Padma Shri Prof. G.D. Yadav',
+    'Padma Shri Prof. J. P. Mittal',
+    'Prof. A. B. Pandit, VC, ICT'
+  ].map((patron, idx) => (
+    <div
+      key={idx}
+      className="
+        p-3 md:p-4 
+        bg-gradient-to-br from-gray-50 to-gray-100 
+        rounded-lg shadow hover:shadow-md transition-shadow 
+        dark:from-gray-200 dark:to-gray-300
+      "
+    >
+      <p className="font-semibold text-sm md:text-base text-center text-gray-900 dark:text-gray-900">
+        {patron}
+      </p>
+    </div>
+  ))}
+</div>
+
 
             {/* Abstract Information */}
             <div className="bg-blue-50 rounded-lg p-4 md:p-6 mb-6 border-l-4 border-blue-900">
@@ -86,66 +105,68 @@ export default function Home() {
             {/* Important Dates & Registration Fees Tables */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
               {/* Important Dates */}
-              <div className="bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-lg shadow-lg overflow-hidden">
-                <div className="bg-gradient-to-r from-yellow-600 to-yellow-700 text-white p-3 md:p-4">
-                  <h3 className="text-xl md:text-2xl font-bold text-center">Important Dates</h3>
-                </div>
-                <table className="w-full">
-                  <tbody>
-                    <tr className="border-b border-yellow-300">
-                      <td className="p-3 md:p-4 font-semibold text-sm md:text-base">Abstract submission:</td>
-                      <td className="p-3 md:p-4 text-right font-bold text-sm md:text-base">05 December 2025</td>
-                    </tr>
-                    <tr className="border-b border-yellow-300">
-                      <td className="p-3 md:p-4 font-semibold text-sm md:text-base">Acceptance of the abstracts:</td>
-                      <td className="p-3 md:p-4 text-right font-bold text-sm md:text-base">10 January 2026</td>
-                    </tr>
-                    <tr className="border-b border-yellow-300">
-                      <td className="p-3 md:p-4 font-semibold text-sm md:text-base">Accommodation request:</td>
-                      <td className="p-3 md:p-4 text-right font-bold text-sm md:text-base">20 January 2026</td>
-                    </tr>
-                    <tr className="border-b border-yellow-300">
-                      <td className="p-3 md:p-4 font-semibold text-sm md:text-base">Payment of registration fees:</td>
-                      <td className="p-3 md:p-4 text-right font-bold text-sm md:text-base">15 January 2026</td>
-                    </tr>
-                    <tr>
-                      <td className="p-3 md:p-4 font-semibold text-sm md:text-base">Accompanying person:</td>
-                      <td className="p-3 md:p-4 text-right font-bold text-sm md:text-base">₹ 1000/-</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+             {/* Important Dates */}
+<div className="bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-lg shadow-lg overflow-hidden">
+  <div className="bg-gradient-to-r from-yellow-600 to-yellow-700 text-white p-3 md:p-4">
+    <h3 className="text-xl md:text-2xl font-bold text-center">Important Dates</h3>
+  </div>
+  <table className="w-full">
+    <tbody>
+      <tr className="border-b border-yellow-300">
+        <td className="p-3 md:p-4 font-semibold text-sm md:text-base dark:text-yellow-900">Abstract submission:</td>
+        <td className="p-3 md:p-4 text-right font-bold text-sm md:text-base dark:text-yellow-900">05 December 2025</td>
+      </tr>
+      <tr className="border-b border-yellow-300">
+        <td className="p-3 md:p-4 font-semibold text-sm md:text-base dark:text-yellow-900">Acceptance of the abstracts:</td>
+        <td className="p-3 md:p-4 text-right font-bold text-sm md:text-base dark:text-yellow-900">10 January 2026</td>
+      </tr>
+      <tr className="border-b border-yellow-300">
+        <td className="p-3 md:p-4 font-semibold text-sm md:text-base dark:text-yellow-900">Accommodation request:</td>
+        <td className="p-3 md:p-4 text-right font-bold text-sm md:text-base dark:text-yellow-900">20 January 2026</td>
+      </tr>
+      <tr className="border-b border-yellow-300">
+        <td className="p-3 md:p-4 font-semibold text-sm md:text-base dark:text-yellow-900">Payment of registration fees:</td>
+        <td className="p-3 md:p-4 text-right font-bold text-sm md:text-base dark:text-yellow-900">15 January 2026</td>
+      </tr>
+      <tr>
+        <td className="p-3 md:p-4 font-semibold text-sm md:text-base dark:text-yellow-900">Accompanying person:</td>
+        <td className="p-3 md:p-4 text-right font-bold text-sm md:text-base dark:text-yellow-900">₹ 1000/-</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
-              {/* Registration Fees */}
-              <div className="bg-gradient-to-br from-teal-50 to-teal-100 rounded-lg shadow-lg overflow-hidden">
-                <div className="bg-gradient-to-r from-teal-500 to-teal-600 text-white p-3 md:p-4">
-                  <h3 className="text-xl md:text-2xl font-bold text-center">Registration Fees</h3>
-                </div>
-                <table className="w-full">
-                  <tbody>
-                    <tr className="border-b border-teal-300">
-                      <td className="p-3 md:p-4 font-semibold text-sm md:text-base">M.Sc.</td>
-                      <td className="p-3 md:p-4 text-right font-bold text-sm md:text-base">₹ 750/-</td>
-                    </tr>
-                    <tr className="border-b border-teal-300">
-                      <td className="p-3 md:p-4 font-semibold text-sm md:text-base">Ph.D Students/Post-Docs</td>
-                      <td className="p-3 md:p-4 text-right font-bold text-sm md:text-base">₹ 1000/-</td>
-                    </tr>
-                    <tr className="border-b border-teal-300">
-                      <td className="p-3 md:p-4 font-semibold text-sm md:text-base">Academician/Scientists</td>
-                      <td className="p-3 md:p-4 text-right font-bold text-sm md:text-base">₹ 2000/-</td>
-                    </tr>
-                    <tr className="border-b border-teal-300">
-                      <td className="p-3 md:p-4 font-semibold text-sm md:text-base">Delegates from Industries</td>
-                      <td className="p-3 md:p-4 text-right font-bold text-sm md:text-base">₹ 4000/-</td>
-                    </tr>
-                    <tr>
-                      <td className="p-3 md:p-4 font-semibold text-sm md:text-base">Accompanying person</td>
-                      <td className="p-3 md:p-4 text-right font-bold text-sm md:text-base">₹ 1000/-</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+{/* Registration Fees */}
+<div className="bg-gradient-to-br from-teal-50 to-teal-100 rounded-lg shadow-lg overflow-hidden">
+  <div className="bg-gradient-to-r from-teal-500 to-teal-600 text-white p-3 md:p-4">
+    <h3 className="text-xl md:text-2xl font-bold text-center">Registration Fees</h3>
+  </div>
+  <table className="w-full">
+    <tbody>
+      <tr className="border-b border-teal-300">
+        <td className="p-3 md:p-4 font-semibold text-sm md:text-base dark:text-teal-900">M.Sc.</td>
+        <td className="p-3 md:p-4 text-right font-bold text-sm md:text-base dark:text-teal-900">₹ 750/-</td>
+      </tr>
+      <tr className="border-b border-teal-300">
+        <td className="p-3 md:p-4 font-semibold text-sm md:text-base dark:text-teal-900">Ph.D Students/Post-Docs</td>
+        <td className="p-3 md:p-4 text-right font-bold text-sm md:text-base dark:text-teal-900">₹ 1000/-</td>
+      </tr>
+      <tr className="border-b border-teal-300">
+        <td className="p-3 md:p-4 font-semibold text-sm md:text-base dark:text-teal-900">Academician/Scientists</td>
+        <td className="p-3 md:p-4 text-right font-bold text-sm md:text-base dark:text-teal-900">₹ 2000/-</td>
+      </tr>
+      <tr className="border-b border-teal-300">
+        <td className="p-3 md:p-4 font-semibold text-sm md:text-base dark:text-teal-900">Delegates from Industries</td>
+        <td className="p-3 md:p-4 text-right font-bold text-sm md:text-base dark:text-teal-900">₹ 4000/-</td>
+      </tr>
+      <tr>
+        <td className="p-3 md:p-4 font-semibold text-sm md:text-base dark:text-teal-900">Accompanying person</td>
+        <td className="p-3 md:p-4 text-right font-bold text-sm md:text-base dark:text-teal-900">₹ 1000/-</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
             </div>
           </div>
         </div>

@@ -1,8 +1,81 @@
+"use client";
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { Eye, Users } from 'lucide-react';
 
 export default function Footer() {
+  const [visitorStats, setVisitorStats] = useState({
+    totalVisitors: 0,
+    topCountries: []
+  });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const res = await fetch('/api/visitors');
+        const data = await res.json();
+        
+        if (data.success) {
+          setVisitorStats({
+            totalVisitors: data.totalVisitors,
+            topCountries: data.countryStats.slice(0, 3)
+          });
+        }
+      } catch (error) {
+        console.error('Error fetching visitor stats:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchStats();
+  }, []);
+
   return (
-    <footer className="bg-gradient-to-r from-blue-950 via-blue-900 to-blue-950 text-white mt-auto">
+    <footer className="bg-gradient-to-r from-blue-950 via-blue-900 to-blue-950 text-white mt-auto relative">
+      {/* Visitor Counter - Top Right Corner */}
+      <div className="absolute top-4 right-4 bg-gradient-to-br from-blue-800 to-blue-700 rounded-lg shadow-lg p-3 border border-blue-600/30 backdrop-blur-sm">
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-1.5">
+            <Eye className="w-4 h-4 text-yellow-400" />
+            <div>
+              <p className="text-[10px] text-blue-200 leading-tight">Visitors</p>
+              {loading ? (
+                <div className="h-4 w-12 bg-blue-600 rounded animate-pulse"></div>
+              ) : (
+                <p className="text-sm font-bold leading-tight">{visitorStats.totalVisitors.toLocaleString()}</p>
+              )}
+            </div>
+          </div>
+          
+          {!loading && visitorStats.topCountries.length > 0 && (
+            <>
+              <div className="w-px h-8 bg-blue-600"></div>
+              <div className="flex items-center gap-1">
+                {visitorStats.topCountries.map((stat, idx) => (
+                  <div key={idx} className="group relative">
+                    {stat.countryCode !== 'XX' ? (
+                      <img 
+                        src={`https://flagcdn.com/20x15/${stat.countryCode.toLowerCase()}.png`}
+                        alt={stat.country}
+                        className="w-5 h-4 rounded shadow-sm hover:scale-110 transition-transform cursor-pointer"
+                      />
+                    ) : (
+                      <span className="text-sm">🌍</span>
+                    )}
+                    {/* Tooltip */}
+                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1 px-2 py-1 bg-gray-900 text-white text-[10px] rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                      {stat.country}: {stat.count}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+
       <div className="max-w-7xl mx-auto px-4 py-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-6">
           {/* Quick Links */}

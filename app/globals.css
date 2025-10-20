@@ -3,6 +3,11 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+
+  /* card defaults (light mode) */
+  --card-bg: #ffffff;
+  --card-foreground: #1f2937;
+  --muted-text: #4b5563;
 }
 
 @theme inline {
@@ -16,6 +21,11 @@
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+
+    /* card for dark */
+    --card-bg: #0f1724; /* dark card bg */
+    --card-foreground: #e6eef8; 
+    --muted-text: #9ca3af;
   }
 }
 
@@ -23,4 +33,13 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* optional helper classes if you want to mix variables with Tailwind */
+.card-bg {
+  background-color: var(--card-bg);
+  color: var(--card-foreground);
+}
+.muted {
+  color: var(--muted-text);
 }
