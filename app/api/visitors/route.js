@@ -54,22 +54,47 @@ export async function POST(request) {
   
   try {
     const body = await request.json();
-    const { ip, userAgent } = body;
+    
+    // Get IP from request headers (better for mobile detection)
+    const forwarded = request.headers.get('x-forwarded-for');
+    const realIp = request.headers.get('x-real-ip');
+    const cfConnectingIp = request.headers.get('cf-connecting-ip');
+    
+    const ip = forwarded?.split(',')[0]?.trim() || 
+               realIp?.trim() || 
+               cfConnectingIp?.trim() || 
+               body.ip || 
+               'unknown';
+
+    const userAgent = body.userAgent || request.headers.get('user-agent') || 'unknown';
+    
+    // Create a unique fingerprint combining IP and User Agent
+    const fingerprint = `${ip}_${userAgent.substring(0, 50)}`;
 
     // Get geolocation data from IP
     let country = 'Unknown';
     let countryCode = 'XX';
     let city = 'Unknown';
+    let isp = 'Unknown';
 
     try {
       // Using ip-api.com for geolocation (free, no API key needed)
-      const geoResponse = await fetch(`http://ip-api.com/json/${ip}?fields=status,country,countryCode,city`);
+      const geoResponse = await fetch(`http://ip-api.com/json/${ip}?fields=status,country,countryCode,city,isp,mobile`, {
+        headers: {
+          'User-Agent': 'RACS2026-Conference-Tracker'
+        }
+      });
       const geoData = await geoResponse.json();
       
+      console.log('Geolocation Response:', geoData); // Debug log
+      
       if (geoData.status === 'success') {
-        country = geoData.country;
-        countryCode = geoData.countryCode;
-        city = geoData.city;
+        country = geoData.country || 'Unknown';
+        countryCode = geoData.countryCode || 'XX';
+        city = geoData.city || 'Unknown';
+        isp = geoData.isp || 'Unknown';
+      } else {
+        console.log('Geolocation failed for IP:', ip);
       }
     } catch (geoError) {
       console.error('Geolocation error:', geoError);
@@ -79,23 +104,29 @@ export async function POST(request) {
     const db = client.db('racs2026_conference');
     const visitorsCollection = db.collection('visitors');
 
-    // Check if this IP visited in the last 24 hours (to avoid duplicate counting)
-    const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
+    // Check if this fingerprint visited in the last 30 minutes (to avoid spam but count unique devices)
+    const thirtyMinutesAgo = new Date(Date.now() - 30 * 60 * 1000);
     const existingVisit = await visitorsCollection.findOne({
-      ip,
-      timestamp: { $gte: oneDayAgo }
+      fingerprint,
+      timestamp: { $gte: thirtyMinutesAgo }
     });
 
     if (!existingVisit) {
       // Record new visit
       await visitorsCollection.insertOne({
         ip,
+        fingerprint,
         userAgent,
         country,
         countryCode,
         city,
+        isp,
         timestamp: new Date()
       });
+      
+      console.log('New visit recorded:', { ip, country, city, userAgent: userAgent.substring(0, 50) });
+    } else {
+      console.log('Duplicate visit ignored:', { ip, fingerprint });
     }
 
     // Get updated count
@@ -107,14 +138,16 @@ export async function POST(request) {
       visitor: {
         country,
         countryCode,
-        city
+        city,
+        ip: ip.substring(0, 10) + '***' // Partial IP for privacy
       }
     });
   } catch (error) {
     console.error('Error recording visit:', error);
     return Response.json({
       success: false,
-      message: 'Error recording visit'
+      message: 'Error recording visit',
+      error: error.message
     }, { status: 500 });
   } finally {
     if (client) {
