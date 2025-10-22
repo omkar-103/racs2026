@@ -322,7 +322,7 @@ const jsonLd = {
                   </div>
                   <div className="p-6">
                     <div className="flex items-center justify-center mb-4">
-                      <span className="text-6xl">📅</span>
+                      <span className="text-6xl">🗓️</span>
                     </div>
                     <p className="text-center text-gray-700 text-base mb-4">
                       View all deadlines and key dates for abstract submission, registration, and accommodation.
