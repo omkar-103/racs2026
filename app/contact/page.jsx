@@ -10,7 +10,7 @@ export default function ContactPage() {
       <div className="bg-gray-50 py-8 md:py-12">
         <div className="max-w-3xl mx-auto px-4">
           <div className="bg-white rounded-xl shadow-lg p-6 md:p-8">
-            <h2 className="text-2xl md:text-3xl font-bold text-blue-900 mb-6">Contact NWMC</h2>
+            <h2 className="text-2xl md:text-3xl font-bold text-blue-900 mb-6">Contact RACS</h2>
             <p className="text-base md:text-lg text-gray-700 mb-6">For any query, please write to:</p>
             
             <div className="space-y-4">
