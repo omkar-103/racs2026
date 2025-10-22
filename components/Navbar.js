@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { ChevronDown, Menu, X, LogOut, Shield } from 'lucide-react';
 
@@ -8,6 +8,7 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
+  const dropdownRef = useRef(null);
 
   const adminEmails = [
     'ac.chaskar@ictmumbai.edu.in',
@@ -26,10 +27,35 @@ export default function Navbar() {
     }
   }, []);
 
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setShowCommitteeDropdown(false);
+      }
+    };
+
+    if (showCommitteeDropdown) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showCommitteeDropdown]);
+
   const handleLogout = () => {
     setIsLoggedIn(false);
     setCurrentUser(null);
     localStorage.removeItem('conferenceUser');
+  };
+
+  const toggleCommitteeDropdown = () => {
+    setShowCommitteeDropdown(!showCommitteeDropdown);
+  };
+
+  const closeDropdown = () => {
+    setShowCommitteeDropdown(false);
   };
 
   return (
@@ -65,24 +91,35 @@ export default function Navbar() {
                 Scope of the Conference
               </Link>
               
-              {/* Committee Dropdown */}
-              <div 
-                className="relative"
-                onMouseEnter={() => setShowCommitteeDropdown(true)}
-                onMouseLeave={() => setShowCommitteeDropdown(false)}
-              >
-                <button className="px-4 py-2 hover:bg-blue-800 rounded transition-all duration-200 flex items-center font-medium">
-                  Committee <ChevronDown className="ml-1 w-4 h-4" />
+              {/* Committee Dropdown - Click-based for better accessibility */}
+              <div className="relative" ref={dropdownRef}>
+                <button 
+                  onClick={toggleCommitteeDropdown}
+                  className="px-4 py-2 hover:bg-blue-800 rounded transition-all duration-200 flex items-center font-medium"
+                >
+                  Committee <ChevronDown className={`ml-1 w-4 h-4 transition-transform duration-200 ${showCommitteeDropdown ? 'rotate-180' : ''}`} />
                 </button>
                 {showCommitteeDropdown && (
-                  <div className="absolute left-0 mt-2 w-64 bg-white text-blue-950 shadow-2xl rounded-lg overflow-hidden">
-                    <Link href="/committee/national" className="block px-4 py-3 hover:bg-blue-100 border-b transition-colors">
+                  <div className="absolute left-0 mt-2 w-64 bg-white text-blue-950 shadow-2xl rounded-lg overflow-hidden border-2 border-blue-200 z-50">
+                    <Link 
+                      href="/committee/national" 
+                      className="block px-4 py-3 hover:bg-blue-100 border-b transition-colors text-base"
+                      onClick={closeDropdown}
+                    >
                       National Advisory Committee
                     </Link>
-                    <Link href="/committee/organizing" className="block px-4 py-3 hover:bg-blue-100 border-b transition-colors">
+                    <Link 
+                      href="/committee/organizing" 
+                      className="block px-4 py-3 hover:bg-blue-100 border-b transition-colors text-base"
+                      onClick={closeDropdown}
+                    >
                       Organizing Committee
                     </Link>
-                    <Link href="/committee/local" className="block px-4 py-3 hover:bg-blue-100 transition-colors">
+                    <Link 
+                      href="/committee/local" 
+                      className="block px-4 py-3 hover:bg-blue-100 transition-colors text-base"
+                      onClick={closeDropdown}
+                    >
                       Local Organizing Committee
                     </Link>
                   </div>

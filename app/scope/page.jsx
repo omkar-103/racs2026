@@ -5,7 +5,7 @@ export default function ScopePage() {
   const topics = [
     'Green and Sustainable Chemistry',
     'Computational Chemistry',
-    'Artificial Intelligence driven Chemistry',
+    'Artificial Intelligence Driven Chemistry',
     'Advanced functional materials',
     'Polymer Chemistry',
     'Green Energy generation & Storage',

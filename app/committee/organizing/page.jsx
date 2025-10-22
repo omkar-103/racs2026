@@ -14,7 +14,8 @@ export default function CommitteeOrganizing() {
     'Dr. Shilpee Sachar',
     'Dr. Sandeep Nigam',
     'Prof. Raghunath Acharya',
-    'Dr. Kanhu Barick'
+    'Dr. Kanhu Barick',
+    'Dr. Anant Kapdi'
   ];
 
   return (
