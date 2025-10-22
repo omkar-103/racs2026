@@ -108,7 +108,24 @@ export default function Footer() {
           <p>&copy; 2025 RACS-2026. All Rights Reserved.</p>
           <p className="mt-1 text-xs text-gray-300">Organized by Department of Chemistry, ICT Mumbai & Indian Chemical Society - Mumbai Branch</p>
         </div>
+
+
+       {/* Developer Credit */}
+        <p className="absolute bottom-0 right-4 text-[3px] sm:text-[5px] text-blue-400/50 hover:text-blue-300/70 transition-colors">
+  Website Developed by{' '}
+  <a 
+    href="https://linkedin.com/in/omkar-parelkar" 
+    target="_blank" 
+    rel="noopener noreferrer"
+    className="hover:text-blue-200 underline decoration-dotted"
+  >
+    Omkar Parelkar
+  </a>
+</p>
+
       </div>
+
+      
     </footer>
   );
 }

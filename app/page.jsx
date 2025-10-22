@@ -1,152 +1,361 @@
-"use client";
-import React, { useState, useEffect } from 'react';
-import { Wrench, Mail, Bell, Sparkles, Calendar, MapPin } from 'lucide-react';
+'use client';
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 
-export default function UnderConstructionPage() {
-  const [email, setEmail] = useState('');
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [animate, setAnimate] = useState(false);
+export default function Home() {
+
+  // Add this in your page.js or layout.js
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Event',
+  name: 'RACS-2026 - National Conference on Recent Advances in Chemical Sciences',
+  description: 'National Conference on Recent Advances in Chemical Sciences for Societal and Industrial Applications',
+  startDate: '2026-01-20T09:00:00+05:30',
+  endDate: '2026-01-22T17:00:00+05:30',
+  eventStatus: 'https://schema.org/EventScheduled',
+  eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+  location: {
+    '@type': 'Place',
+    name: 'Institute of Chemical Technology',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: 'Nathalal Parekh Marg, Matunga',
+      addressLocality: 'Mumbai',
+      addressRegion: 'Maharashtra',
+      postalCode: '400019',
+      addressCountry: 'IN'
+    }
+  },
+  organizer: [
+    {
+      '@type': 'Organization',
+      name: 'Institute of Chemical Technology Mumbai',
+      url: 'https://www.ictmumbai.edu.in'
+    },
+    {
+      '@type': 'Organization',
+      name: 'Indian Chemical Society',
+      url: 'https://www.indianchemicalsociety.com'
+    }
+  ],
+  performer: {
+    '@type': 'PerformingGroup',
+    name: 'Chemical Scientists and Researchers'
+  }
+};
+
+// Add this script tag in your page
+<script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+/>
+
+
+  const [hasRecorded, setHasRecorded] = useState(false);
 
   useEffect(() => {
-    setAnimate(true);
-  }, []);
+    // Record this visit only once
+    const recordVisit = async () => {
+      const sessionKey = 'visitor_recorded';
+      const recorded = sessionStorage.getItem(sessionKey);
+      
+      if (recorded && hasRecorded) {
+        console.log('Visit already recorded in this session');
+        return;
+      }
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (email) {
-      setIsSubmitted(true);
-      setTimeout(() => {
-        setEmail('');
-        setIsSubmitted(false);
-      }, 3000);
-    }
-  };
-
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-teal-50 flex items-center justify-center p-4 overflow-hidden relative">
-      {/* Subtle background pattern */}
-      <div className="absolute inset-0 overflow-hidden opacity-30">
-        <div className="absolute top-0 left-0 w-full h-full" style={{
-          backgroundImage: `radial-gradient(circle at 2px 2px, rgb(148, 163, 184) 1px, transparent 0)`,
-          backgroundSize: '48px 48px'
-        }}></div>
-      </div>
-
-      {/* Main content */}
-      <div className={`relative z-10 max-w-5xl w-full transition-all duration-1000 transform ${animate ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-        <div className="bg-white rounded-3xl shadow-2xl p-8 md:p-12 border border-slate-200">
-          {/* Logo Section */}
-          <div className="flex justify-center items-center gap-6 mb-10 flex-wrap">
-            <div className="w-20 h-20 md:w-28 md:h-28 bg-white rounded-full p-2 shadow-lg border-2 border-blue-100">
-              <img src="https://indianchemicalsociety.com/images/logo.png" alt="ICS" className="w-full h-full object-cover rounded-full" />
-            </div>
-            <div className="w-20 h-20 md:w-28 md:h-28 bg-white rounded-full p-2 shadow-lg border-2 border-blue-100">
-              <img src="https://upload.wikimedia.org/wikipedia/en/1/13/Institute_of_Chemical_Technology_logo.png" alt="ICT" className="w-full h-full object-cover rounded-full" />
-            </div>
-          </div>
-
-          {/* Icon with animation */}
-          <div className="flex justify-center mb-8">
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-teal-500 rounded-full blur-xl opacity-20 animate-pulse"></div>
-              <div className="relative bg-gradient-to-r from-blue-600 to-teal-600 p-5 rounded-full shadow-lg">
-                <Wrench className="w-10 h-10 text-white" style={{ animation: 'bounce 2s infinite' }} />
-              </div>
-            </div>
-          </div>
-
-          {/* Heading */}
-          <div className="text-center mb-8">
-            <h1 className="text-4xl md:text-6xl font-bold text-slate-800 mb-3 tracking-tight">
-              RACS-2026
-            </h1>
-            <h2 className="text-2xl md:text-3xl font-semibold text-slate-700 mb-4">
-              Website Under Maintenance
-            </h2>
-            <div className="flex items-center justify-center gap-2 text-slate-600 text-base">
-              <Sparkles className="w-5 h-5 text-teal-600" />
-              <p className="font-medium">We're making improvements to serve you better</p>
-              <Sparkles className="w-5 h-5 text-teal-600" />
-            </div>
-          </div>
-
-          {/* Conference Info */}
-          <div className="bg-gradient-to-br from-blue-50 to-teal-50 rounded-2xl p-6 md:p-8 mb-8 border-2 border-blue-200 shadow-md">
-            <h2 className="text-xl md:text-2xl font-bold text-slate-800 text-center mb-3 leading-tight">
-              National Conference on Recent Advances in Chemical Sciences
-            </h2>
-            <p className="text-lg md:text-xl text-slate-700 text-center mb-5 font-medium">
-              RACS-2026 & 42nd Research Scholars Meet (RSM-2026)
-            </p>
-            <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8">
-              <div className="flex items-center gap-2 bg-white px-4 py-3 rounded-lg shadow-sm">
-                <Calendar className="w-6 h-6 text-blue-600" />
-                <span className="text-base md:text-lg font-semibold text-slate-800">February 26-28, 2026</span>
-              </div>
-              <div className="flex items-center gap-2 bg-white px-4 py-3 rounded-lg shadow-sm">
-                <MapPin className="w-6 h-6 text-teal-600" />
-                <span className="text-base md:text-lg font-semibold text-slate-800">K. V. Auditorium, ICT Mumbai</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Description */}
-          <p className="text-center text-slate-600 text-base md:text-lg mb-10 max-w-3xl mx-auto leading-relaxed font-medium">
-            We are currently updating our website to serve you better. Our team is working diligently to bring you an improved experience with the latest conference information and registration details.
-          </p>
-
-          {/* Progress indicator */}
-          <div className="max-w-md mx-auto mb-10">
-            <div className="flex justify-between text-slate-700 text-sm font-semibold mb-3">
-              <span>Maintenance Progress</span>
-              <span className="text-blue-600">85%</span>
-            </div>
-            <div className="w-full bg-slate-200 rounded-full h-4 overflow-hidden shadow-inner">
-              <div className="bg-gradient-to-r from-blue-600 to-teal-600 h-4 rounded-full transition-all duration-500 shadow-sm" style={{ width: '85%' }}></div>
-            </div>
-          </div>
-
-          {/* Contact Info */}
-          <div className="text-center bg-slate-50 rounded-2xl p-6 md:p-8 border-2 border-slate-200 shadow-md">
-            <p className="text-slate-800 text-lg md:text-xl mb-4 font-bold">Need Immediate Assistance?</p>
-            <div className="flex flex-col items-center justify-center gap-3">
-              <div className="flex items-center gap-3 bg-white px-5 py-3 rounded-lg shadow-sm border border-slate-200">
-                <Mail className="w-5 h-5 text-blue-600" />
-                <a href="mailto:icticsmbracs2026@gmail.com" className="text-slate-700 hover:text-blue-600 transition-colors font-medium text-base">
-                  icticsmbracs2026@gmail.com
-                </a>
-              </div>
-            </div>
-            <p className="text-slate-600 text-sm md:text-base mt-5 font-medium">
-              We'll be back online shortly. Thank you for your patience!
-            </p>
-          </div>
-
-          {/* Organizers */}
-          <div className="text-center mt-8 pt-6 border-t border-slate-200">
-            <p className="text-slate-600 text-sm font-semibold mb-2">Organized by</p>
-            <p className="text-slate-800 font-bold text-base">
-              Department of Chemistry, ICT Mumbai & Indian Chemical Society – Mumbai Branch
-            </p>
-          </div>
-        </div>
-
-        {/* Footer text */}
-        <p className="text-center text-slate-600 text-sm font-medium mt-8">
-          © 2025 RACS-2026. Website will be available soon.
-        </p>
-      </div>
-
-      <style>{`
-        @keyframes bounce {
-          0%, 100% {
-            transform: translateY(0);
-          }
-          50% {
-            transform: translateY(-10px);
+      try {
+        console.log('Starting visit recording...');
+        
+        const ipRes = await fetch('/api/get-ip');
+        const ipData = await ipRes.json();
+        
+        console.log('IP Response:', ipData);
+        
+        if (ipData.success && ipData.ip) {
+          const visitRes = await fetch('/api/visitors', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              ip: ipData.ip,
+              userAgent: navigator.userAgent
+            })
+          });
+          
+          const visitData = await visitRes.json();
+          console.log('Visit Response:', visitData);
+          
+          if (visitData.success) {
+            sessionStorage.setItem(sessionKey, 'true');
+            setHasRecorded(true);
+            console.log('Visit recorded successfully. Total visitors:', visitData.totalVisitors);
           }
         }
-      `}</style>
+      } catch (error) {
+        console.error('Error recording visit:', error);
+      }
+    };
+
+    recordVisit();
+  }, []);
+
+  return (
+    <div className="min-h-screen flex flex-col">
+      <Navbar />
+      
+      {/* Important Updates Marquee */}
+      <div className="bg-gradient-to-r from-red-600 via-red-500 to-red-600 text-white shadow-lg overflow-hidden">
+        <div className="flex items-center">
+          {/* Important Updates Label */}
+          <div className="bg-white text-red-600 px-4 md:px-6 py-2.5 md:py-3 font-bold text-xs md:text-base whitespace-nowrap flex-shrink-0 shadow-md">
+            Important Updates
+          </div>
+          
+          {/* Scrolling Content */}
+          <div className="flex-1 overflow-hidden py-2.5 md:py-3">
+            <div className="flex animate-scroll">
+              <div className="flex items-center whitespace-nowrap">
+                <a 
+                  href="https://drive.google.com/file/d/1cJnN5wM_CqapgTZwhYuTRzRYlg0jpA3B/view?usp=sharing" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center text-xs md:text-base font-semibold hover:text-yellow-300 transition-colors px-4 cursor-pointer"
+                >
+                  <span className="mr-2">📢</span>
+                  Click here to check RACS-2026 Conference Flyer & Important Announcements
+                </a>
+                <span className="text-yellow-300 mx-4 md:mx-8">•</span>
+                
+                <a 
+                  href="https://drive.google.com/file/d/1cJnN5wM_CqapgTZwhYuTRzRYlg0jpA3B/view?usp=sharing" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center text-xs md:text-base font-semibold hover:text-yellow-300 transition-colors px-4 cursor-pointer"
+                >
+                  <span className="mr-2">🔔</span>
+                  Abstract Submission Deadline: December 05, 2025
+                </a>
+                <span className="text-yellow-300 mx-4 md:mx-8">•</span>
+                
+                <a 
+                  href="https://drive.google.com/file/d/1cJnN5wM_CqapgTZwhYuTRzRYlg0jpA3B/view?usp=sharing" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center text-xs md:text-base font-semibold hover:text-yellow-300 transition-colors px-4 cursor-pointer"
+                >
+                  <span className="mr-2">📢</span>
+                  Click here to check RACS-2026 Conference Flyer & Important Announcements
+                </a>
+                <span className="text-yellow-300 mx-4 md:mx-8">•</span>
+              </div>
+              
+              {/* Duplicate for seamless loop */}
+              <div className="flex items-center whitespace-nowrap">
+                <a 
+                  href="https://drive.google.com/file/d/1cJnN5wM_CqapgTZwhYuTRzRYlg0jpA3B/view?usp=sharing" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center text-xs md:text-base font-semibold hover:text-yellow-300 transition-colors px-4 cursor-pointer"
+                >
+                  <span className="mr-2">📢</span>
+                  Click here to check RACS-2026 Conference Flyer & Important Announcements
+                </a>
+                <span className="text-yellow-300 mx-4 md:mx-8">•</span>
+                
+                <a 
+                  href="https://drive.google.com/file/d/1cJnN5wM_CqapgTZwhYuTRzRYlg0jpA3B/view?usp=sharing" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center text-xs md:text-base font-semibold hover:text-yellow-300 transition-colors px-4 cursor-pointer"
+                >
+                  <span className="mr-2">🔔</span>
+                  Abstract Submission Deadline: December 05, 2025
+                </a>
+                <span className="text-yellow-300 mx-4 md:mx-8">•</span>
+                
+                <a 
+                  href="https://drive.google.com/file/d/1cJnN5wM_CqapgTZwhYuTRzRYlg0jpA3B/view?usp=sharing" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center text-xs md:text-base font-semibold hover:text-yellow-300 transition-colors px-4 cursor-pointer"
+                >
+                  <span className="mr-2">📢</span>
+                  Click here to check RACS-2026 Conference Flyer & Important Announcements
+                </a>
+                <span className="text-yellow-300 mx-4 md:mx-8">•</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      {/* Hero Section */}
+      <div className="bg-gradient-to-b from-yellow-100 to-yellow-50 py-8 md:py-12">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="bg-white rounded-lg shadow-2xl p-4 md:p-8">
+            {/* Header with Logos */}
+            <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-6">
+              <div className="w-24 h-24 md:w-32 md:h-32 flex-shrink-0">
+                <img src="https://indianchemicalsociety.com/images/logo.png" alt="Indian Chemical Society" className="w-full h-full rounded-full border-4 border-blue-900 object-cover" />
+              </div>
+              
+              <div className="flex-1 w-full">
+                <h1 className="text-2xl md:text-4xl font-bold text-center text-blue-900 mb-3"></h1>
+                <div className="bg-gradient-to-r from-blue-900 via-blue-800 to-blue-900 text-white rounded-lg p-4 md:p-6 text-center shadow-lg">
+                  <h2 className="text-lg md:text-2xl font-bold mb-2">National Conference on</h2>
+                  <h3 className="text-base md:text-xl mb-2 leading-tight">Recent Advances in Chemical Sciences for Societal and Industrial Applications (RACS-2026)</h3>
+                  <p className="text-sm md:text-lg mb-2">& 42nd Research Scholars Meet (RSM-2026)</p>
+                  <p className="text-lg md:text-xl font-semibold mb-2">February 26-28, 2026</p>
+                  <p className="text-sm md:text-lg">Venue: K. V. Auditorium, ICT, Mumbai</p>
+                </div>
+              </div>
+              
+              <div className="w-24 h-24 md:w-32 md:h-32 flex-shrink-0">
+                <img src="https://upload.wikimedia.org/wikipedia/en/1/13/Institute_of_Chemical_Technology_logo.png" alt="ICT Mumbai" className="w-full h-full rounded-full border-4 border-blue-900 object-cover" />
+              </div>
+            </div>
+            
+            {/* Organized By */}
+            <div className="text-center mb-6">
+              <p className="text-lg md:text-xl font-semibold italic mb-2 text-black">
+                Organized by
+              </p>
+              <p className="text-sm md:text-lg font-medium text-black">
+                Department of Chemistry, ICT Mumbai and Indian Chemical Society – Mumbai Branch
+              </p>
+            </div>
+
+            {/* Patrons */}
+            <div className="bg-gradient-to-r from-teal-500 to-teal-600 text-white rounded-lg p-4 mb-6 shadow-md">
+              <h3 className="text-xl md:text-2xl font-bold text-center">Patrons</h3>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 mb-8">
+              {[
+                'Padma Vibhushan Prof M.M. Sharma',
+                'Padma Vibhushan Dr. Anil Kakodkar',
+                'Padma Bhushan Prof. J. B. Joshi',
+                'Padma Shri Prof. G.D. Yadav',
+                'Padma Shri Prof. J. P. Mittal',
+                'Prof. A. B. Pandit, VC, ICT'
+              ].map((patron, idx) => (
+                <div
+                  key={idx}
+                  className="p-3 md:p-4 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg shadow hover:shadow-md transition-shadow"
+                >
+                  <p className="font-semibold text-sm md:text-base text-center text-gray-900">
+                    {patron}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+           {/* Abstract Information */}
+<div className="bg-blue-50 rounded-lg p-6 mb-6 border-l-4 border-blue-900">
+  <h3 className="text-2xl font-bold text-blue-900 mb-4">Abstract Submission</h3>
+  
+  <div className="space-y-4 text-gray-700">
+    <p className="text-base leading-relaxed">
+      Abstracts of the contributed papers should be submitted before{' '}
+      <strong className="text-blue-900">December 05, 2025</strong>. The length of the 
+      abstract should be limited to one page (Template available on:{' '}
+      <a 
+        href="https://www.racs2026.in/" 
+        className="text-blue-600 hover:text-blue-800 hover:underline font-medium transition-colors" 
+        target="_blank" 
+        rel="noopener noreferrer"
+      >
+        https://www.racs2026.in/
+      </a>) including figures, tables and references.
+    </p>
+    
+    <p className="text-base leading-relaxed">
+      Abstract submission should be done through online portal (
+      <a 
+        href="https://www.racs2026.in/" 
+        className="text-blue-600 hover:text-blue-800 hover:underline font-medium transition-colors" 
+        target="_blank" 
+        rel="noopener noreferrer"
+      >
+        https://www.racs2026.in/
+      </a>). Abstracts will be peer reviewed prior to inclusion in the symposium proceedings.
+    </p>
+    
+    <p className="text-base leading-relaxed">
+      The scientific programme of the symposium will include invited talks by eminent Indian 
+      and overseas scientists/engineers. Contributed papers will be presented in oral and 
+      poster sessions.
+    </p>
+  </div>
+</div>
+
+            {/* Important Dates & Registration Fees Tables */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+              {/* Important Dates */}
+              <div className="bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-lg shadow-lg overflow-hidden">
+                <div className="bg-gradient-to-r from-yellow-600 to-yellow-700 text-white p-3 md:p-4">
+                  <h3 className="text-xl md:text-2xl font-bold text-center">Important Dates</h3>
+                </div>
+                <table className="w-full">
+                  <tbody>
+                    <tr className="border-b border-yellow-300">
+                      <td className="p-3 md:p-4 font-semibold text-sm md:text-base text-yellow-900">Abstract submission:</td>
+                      <td className="p-3 md:p-4 text-right font-bold text-sm md:text-base text-yellow-900">05 December 2025</td>
+                    </tr>
+                    <tr className="border-b border-yellow-300">
+                      <td className="p-3 md:p-4 font-semibold text-sm md:text-base text-yellow-900">Acceptance of the abstracts:</td>
+                      <td className="p-3 md:p-4 text-right font-bold text-sm md:text-base text-yellow-900">10 January 2026</td>
+                    </tr>
+                    <tr className="border-b border-yellow-300">
+                      <td className="p-3 md:p-4 font-semibold text-sm md:text-base text-yellow-900">Accommodation request:</td>
+                      <td className="p-3 md:p-4 text-right font-bold text-sm md:text-base text-yellow-900">20 January 2026</td>
+                    </tr>
+                    <tr>
+                      <td className="p-3 md:p-4 font-semibold text-sm md:text-base text-yellow-900">Payment of registration fees:</td>
+                      <td className="p-3 md:p-4 text-right font-bold text-sm md:text-base text-yellow-900">15 January 2026</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Registration Fees */}
+              <div className="bg-gradient-to-br from-teal-50 to-teal-100 rounded-lg shadow-lg overflow-hidden">
+                <div className="bg-gradient-to-r from-teal-500 to-teal-600 text-white p-3 md:p-4">
+                  <h3 className="text-xl md:text-2xl font-bold text-center">Registration Fees</h3>
+                </div>
+                <table className="w-full">
+                  <tbody>
+                    <tr className="border-b border-teal-300">
+                      <td className="p-3 md:p-4 font-semibold text-sm md:text-base text-teal-900">M.Sc.</td>
+                      <td className="p-3 md:p-4 text-right font-bold text-sm md:text-base text-teal-900">₹ 750/-</td>
+                    </tr>
+                    <tr className="border-b border-teal-300">
+                      <td className="p-3 md:p-4 font-semibold text-sm md:text-base text-teal-900">Ph.D Students/Post-Docs</td>
+                      <td className="p-3 md:p-4 text-right font-bold text-sm md:text-base text-teal-900">₹ 1000/-</td>
+                    </tr>
+                    <tr className="border-b border-teal-300">
+                      <td className="p-3 md:p-4 font-semibold text-sm md:text-base text-teal-900">Academician/Scientists</td>
+                      <td className="p-3 md:p-4 text-right font-bold text-sm md:text-base text-teal-900">₹ 2000/-</td>
+                    </tr>
+                    <tr className="border-b border-teal-300">
+                      <td className="p-3 md:p-4 font-semibold text-sm md:text-base text-teal-900">Delegates from Industries</td>
+                      <td className="p-3 md:p-4 text-right font-bold text-sm md:text-base text-teal-900">₹ 4000/-</td>
+                    </tr>
+                    <tr>
+                      <td className="p-3 md:p-4 font-semibold text-sm md:text-base text-teal-900">Accompanying person</td>
+                      <td className="p-3 md:p-4 text-right font-bold text-sm md:text-base text-teal-900">₹ 1000/-</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <Footer />
     </div>
   );
 }
