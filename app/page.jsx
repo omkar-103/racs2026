@@ -46,13 +46,6 @@ const jsonLd = {
   }
 };
 
-// Add this script tag in your page
-<script
-  type="application/ld+json"
-  dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-/>
-
-
   const [hasRecorded, setHasRecorded] = useState(false);
 
   useEffect(() => {
@@ -252,110 +245,124 @@ const jsonLd = {
               ))}
             </div>
 
-           {/* Abstract Information */}
-<div className="bg-blue-50 rounded-lg p-6 mb-6 border-l-4 border-blue-900">
-  <h3 className="text-2xl font-bold text-blue-900 mb-4">Abstract Submission</h3>
-  
-  <div className="space-y-4 text-gray-700">
-    <p className="text-base leading-relaxed">
-      Abstracts of the contributed papers should be submitted before{' '}
-      <strong className="text-blue-900">December 05, 2025</strong>. The length of the 
-      abstract should be limited to one page (Template available on:{' '}
-      <a 
-        href="https://www.racs2026.in/" 
-        className="text-blue-600 hover:text-blue-800 hover:underline font-medium transition-colors" 
-        target="_blank" 
-        rel="noopener noreferrer"
-      >
-        https://www.racs2026.in/
-      </a>) including figures, tables and references.
-    </p>
-    
-    <p className="text-base leading-relaxed">
-      Abstract submission should be done through online portal (
-      <a 
-        href="https://www.racs2026.in/" 
-        className="text-blue-600 hover:text-blue-800 hover:underline font-medium transition-colors" 
-        target="_blank" 
-        rel="noopener noreferrer"
-      >
-        https://www.racs2026.in/
-      </a>). Abstracts will be peer reviewed prior to inclusion in the symposium proceedings.
-    </p>
-    
-    <p className="text-base leading-relaxed">
-      The scientific programme of the symposium will include invited talks by eminent Indian 
-      and overseas scientists/engineers. Contributed papers will be presented in oral and 
-      poster sessions.
-    </p>
-  </div>
-</div>
+            {/* Conference Objectives */}
+            <div className="mb-8">
+              <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg p-4 mb-4 shadow-md">
+                <h3 className="text-xl md:text-2xl font-bold text-center">Conference Objectives</h3>
+              </div>
+              
+              <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg p-5 md:p-6 shadow-lg border border-blue-100">
+                <div className="space-y-4">
+                  {[
+                    'Share insights on emerging trends and future prospects in the field of chemical sciences.',
+                    'Foster collaboration across disciplines and strengthen ties between academia and industry.',
+                    'Promote innovative thinking and sustainable approaches to address practical challenges.',
+                    'Create opportunities for early-career researchers to showcase their work and engage with international experts.',
+                    'Inspire the development and exploration of novel ideas.',
+                    'Support and nurture entrepreneurial initiatives in science and technology.'
+                  ].map((objective, idx) => (
+                    <div key={idx} className="flex items-start gap-3">
+                      <div className="flex-shrink-0 w-7 h-7 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-sm shadow-md">
+                        {idx + 1}
+                      </div>
+                      <p className="text-gray-800 text-sm md:text-base leading-relaxed pt-0.5">
+                        {objective}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
 
-            {/* Important Dates & Registration Fees Tables */}
+            {/* Abstract Information */}
+            <div className="bg-blue-50 rounded-lg p-6 mb-6 border-l-4 border-blue-900">
+              <h3 className="text-2xl font-bold text-blue-900 mb-4">Abstract Submission</h3>
+              
+              <div className="space-y-4 text-gray-700">
+                <p className="text-base leading-relaxed">
+                  Abstracts of the contributed papers should be submitted before{' '}
+                  <strong className="text-blue-900">December 05, 2025</strong>. The length of the 
+                  abstract should be limited to one page (Template available on:{' '}
+                  <a 
+                    href="https://www.racs2026.in/" 
+                    className="text-blue-600 hover:text-blue-800 hover:underline font-medium transition-colors" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                  >
+                    https://www.racs2026.in/
+                  </a>) including figures, tables and references.
+                </p>
+                
+                <p className="text-base leading-relaxed">
+                  Abstract submission should be done through online portal (
+                  <a 
+                    href="https://www.racs2026.in/" 
+                    className="text-blue-600 hover:text-blue-800 hover:underline font-medium transition-colors" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                  >
+                    https://www.racs2026.in/
+                  </a>). Abstracts will be peer reviewed prior to inclusion in the symposium proceedings.
+                </p>
+                
+                <p className="text-base leading-relaxed">
+                  The scientific programme of the symposium will include invited talks by eminent Indian 
+                  and overseas scientists/engineers. Contributed papers will be presented in oral and 
+                  poster sessions.
+                </p>
+              </div>
+            </div>
+
+            {/* Quick Links Section - Replacing the tables */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-              {/* Important Dates */}
-              <div className="bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-lg shadow-lg overflow-hidden">
-                <div className="bg-gradient-to-r from-yellow-600 to-yellow-700 text-white p-3 md:p-4">
-                  <h3 className="text-xl md:text-2xl font-bold text-center">Important Dates</h3>
+              <Link href="/important-dates">
+                <div className="group bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-all cursor-pointer">
+                  <div className="bg-gradient-to-r from-yellow-600 to-yellow-700 text-white p-3 md:p-4">
+                    <h3 className="text-xl md:text-2xl font-bold text-center">Important Dates</h3>
+                  </div>
+                  <div className="p-6">
+                    <div className="flex items-center justify-center mb-4">
+                      <span className="text-6xl">📅</span>
+                    </div>
+                    <p className="text-center text-gray-700 text-base mb-4">
+                      View all deadlines and key dates for abstract submission, registration, and accommodation.
+                    </p>
+                    <div className="flex items-center justify-center text-yellow-700 font-semibold group-hover:text-yellow-800">
+                      View Details <span className="ml-2 group-hover:translate-x-2 transition-transform">→</span>
+                    </div>
+                  </div>
                 </div>
-                <table className="w-full">
-                  <tbody>
-                    <tr className="border-b border-yellow-300">
-                      <td className="p-3 md:p-4 font-semibold text-sm md:text-base text-yellow-900">Abstract submission:</td>
-                      <td className="p-3 md:p-4 text-right font-bold text-sm md:text-base text-yellow-900">05 December 2025</td>
-                    </tr>
-                    <tr className="border-b border-yellow-300">
-                      <td className="p-3 md:p-4 font-semibold text-sm md:text-base text-yellow-900">Acceptance of the abstracts:</td>
-                      <td className="p-3 md:p-4 text-right font-bold text-sm md:text-base text-yellow-900">10 January 2026</td>
-                    </tr>
-                    <tr className="border-b border-yellow-300">
-                      <td className="p-3 md:p-4 font-semibold text-sm md:text-base text-yellow-900">Accommodation request:</td>
-                      <td className="p-3 md:p-4 text-right font-bold text-sm md:text-base text-yellow-900">20 January 2026</td>
-                    </tr>
-                    <tr>
-                      <td className="p-3 md:p-4 font-semibold text-sm md:text-base text-yellow-900">Payment of registration fees:</td>
-                      <td className="p-3 md:p-4 text-right font-bold text-sm md:text-base text-yellow-900">15 January 2026</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+              </Link>
 
-              {/* Registration Fees */}
-              <div className="bg-gradient-to-br from-teal-50 to-teal-100 rounded-lg shadow-lg overflow-hidden">
-                <div className="bg-gradient-to-r from-teal-500 to-teal-600 text-white p-3 md:p-4">
-                  <h3 className="text-xl md:text-2xl font-bold text-center">Registration Fees</h3>
+              <Link href="/registration">
+                <div className="group bg-gradient-to-br from-teal-50 to-teal-100 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-all cursor-pointer">
+                  <div className="bg-gradient-to-r from-teal-500 to-teal-600 text-white p-3 md:p-4">
+                    <h3 className="text-xl md:text-2xl font-bold text-center">Registration Fees</h3>
+                  </div>
+                  <div className="p-6">
+                    <div className="flex items-center justify-center mb-4">
+                      <span className="text-6xl">💳</span>
+                    </div>
+                    <p className="text-center text-gray-700 text-base mb-4">
+                      Check registration fees for different categories and complete your registration.
+                    </p>
+                    <div className="flex items-center justify-center text-teal-700 font-semibold group-hover:text-teal-800">
+                      View Details <span className="ml-2 group-hover:translate-x-2 transition-transform">→</span>
+                    </div>
+                  </div>
                 </div>
-                <table className="w-full">
-                  <tbody>
-                    <tr className="border-b border-teal-300">
-                      <td className="p-3 md:p-4 font-semibold text-sm md:text-base text-teal-900">M.Sc.</td>
-                      <td className="p-3 md:p-4 text-right font-bold text-sm md:text-base text-teal-900">₹ 750/-</td>
-                    </tr>
-                    <tr className="border-b border-teal-300">
-                      <td className="p-3 md:p-4 font-semibold text-sm md:text-base text-teal-900">Ph.D Students/Post-Docs</td>
-                      <td className="p-3 md:p-4 text-right font-bold text-sm md:text-base text-teal-900">₹ 1000/-</td>
-                    </tr>
-                    <tr className="border-b border-teal-300">
-                      <td className="p-3 md:p-4 font-semibold text-sm md:text-base text-teal-900">Academician/Scientists</td>
-                      <td className="p-3 md:p-4 text-right font-bold text-sm md:text-base text-teal-900">₹ 2000/-</td>
-                    </tr>
-                    <tr className="border-b border-teal-300">
-                      <td className="p-3 md:p-4 font-semibold text-sm md:text-base text-teal-900">Delegates from Industries</td>
-                      <td className="p-3 md:p-4 text-right font-bold text-sm md:text-base text-teal-900">₹ 4000/-</td>
-                    </tr>
-                    <tr>
-                      <td className="p-3 md:p-4 font-semibold text-sm md:text-base text-teal-900">Accompanying person</td>
-                      <td className="p-3 md:p-4 text-right font-bold text-sm md:text-base text-teal-900">₹ 1000/-</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+              </Link>
             </div>
           </div>
         </div>
       </div>
 
       <Footer />
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
     </div>
   );
 }
