@@ -5,7 +5,6 @@ import { Users } from 'lucide-react';
 export default function CommitteeTechnical() {
   const members = [
     { name: 'Dr. Pavan More', role: 'Chairperson' },
-    { name: 'Dr. A. R. Kapadi', role: '' },
     { name: 'Prof. V. R. Patil', role: '' },
     { name: 'Prof. Y. S. Malghe', role: '' },
     { name: 'Prof. Suresh Pawar', role: '' },

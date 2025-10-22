@@ -201,7 +201,7 @@ export default function Navbar() {
               <Link href="/" className="block px-4 py-2 hover:bg-blue-800 rounded">Home</Link>
               <Link href="/about" className="block px-4 py-2 hover:bg-blue-800 rounded">About Us</Link>
               <Link href="/scope" className="block px-4 py-2 hover:bg-blue-800 rounded">Scope</Link>
-              <Link href="/committee/national" className="block px-4 py-2 hover:bg-blue-800 rounded">National Committee</Link>
+              <Link href="/committee/national" className="block px-4 py-2 hover:bg-blue-800 rounded">National Advisory Committee</Link>
               <Link href="/committee/organizing" className="block px-4 py-2 hover:bg-blue-800 rounded">Organizing Committee</Link>
               <Link href="/committee/local" className="block px-4 py-2 hover:bg-blue-800 rounded">Local Committee</Link>
               <Link href="/committee/technical" className="block px-4 py-2 hover:bg-blue-800 rounded">Technical Committee</Link>
